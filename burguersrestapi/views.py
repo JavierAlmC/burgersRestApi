@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
@@ -7,7 +6,7 @@ from rest_framework import viewsets, generics, status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny
 
 from .models import *
 from .serializers import *

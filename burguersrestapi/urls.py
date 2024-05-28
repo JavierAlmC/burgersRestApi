@@ -1,7 +1,6 @@
 from django.urls import path, include
 from burguersrestapi.views import *
 from rest_framework.routers import DefaultRouter
-from rest_framework.urlpatterns import format_suffix_patterns
 
 router = DefaultRouter()
 router.register(r'burguers', BurgerViewSet)

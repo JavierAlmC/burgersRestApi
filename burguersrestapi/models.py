@@ -1,6 +1,4 @@
 from django.db import models
-from django.core.exceptions import ValidationError
-from django.contrib.auth.models import User
 
 PRODUCTTYPE_CHOICES = {"D":"Drink","B":"Burguer"}
 ORDERTYPE_CHOICES = {"D":"Delivery","P":"Pickup"}
