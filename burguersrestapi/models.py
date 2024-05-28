@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
 
 PRODUCTTYPE_CHOICES = {"D":"Drink","B":"Burguer"}
 ORDERTYPE_CHOICES = {"D":"Delivery","P":"Pickup"}
@@ -43,9 +44,9 @@ class Order(models.Model):
     orderDayHour = models.DateTimeField(auto_now_add=False)
     orderType = models.CharField(choices=ORDERTYPE_CHOICES, default='P',max_length=1)
     adress = models.CharField(max_length=100)
-    info = models.CharField(max_length=100)
+    info = models.CharField(max_length=100, blank=True)
     products = models.ManyToManyField(Product)
-
+    
     class Meta:
         ordering = ['created']
         

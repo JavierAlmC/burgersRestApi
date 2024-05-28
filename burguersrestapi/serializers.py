@@ -27,6 +27,8 @@ class OrderSerializer(serializers.ModelSerializer):
             raise ValidationError('There are 4 orders programmed for this hour today.')
         return data
     
+    
+    
 class ProductSerializer(serializers.ModelSerializer):
     
     class Meta:
@@ -82,30 +84,27 @@ class RegisterSerializer(serializers.ModelSerializer):
     # Check if the passwords match
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
-            raise serializers.ValidationError({"password": "Password fields didn't match."})
+            raise serializers.ValidationError("Password fields didn't match.")
         return attrs
     
     def create(self, validated_data):
         user = User.objects.create(
             username=validated_data['username'],
-            email=validated_data['email'],
-            first_name=validated_data['first_name'],
-            last_name=validated_data['last_name']
+            email=validated_data['email']
         )
         user.set_password(validated_data['password'])
         user.save()
         return user
     
 class LoginSerializer(serializers.Serializer):
-    email = serializers.EmailField()
+    username = serializers.CharField()
     password = serializers.CharField()
 
     def validate(self, attrs):
-        email = attrs.get('email')
+        username = attrs.get('username')
         password = attrs.get('password')
-
-        if email and password:
-            user = authenticate(request=self.context.get('request'), email=email, password=password)
+        if username and password:
+            user = authenticate(request=self.context.get('request'), username=username, password=password)
             if not user: 
                 raise serializers.ValidationError("Invalid login credentials")
         else:

@@ -1,14 +1,17 @@
 from django.shortcuts import render
 from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 
 from rest_framework import viewsets, generics, status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
-from burguersrestapi.models import *
-from burguersrestapi.serializers import *
+from .models import *
+from .serializers import *
+from .permissions import IsOwner
 
 # Create your views here.
 # Model viewsets
@@ -68,8 +71,9 @@ class LogoutUserView(generics.GenericAPIView):
         logout(request)
         return Response({"message": "Logout successful"}, status=status.HTTP_200_OK)
 
-
-
+@login_required
+def auth_status(request):
+    return JsonResponse({'authenticated': True})
 
 # api-root
 @api_view(['GET'])
